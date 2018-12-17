@@ -20,19 +20,11 @@ class groupAddRequest;
 
 class messageBase{
 public:
-   
     static messageBase* factory(const char* buffer); 
-    virtual int getSenderId() const; 
-    virtual void setSenderId(int f); 
-    char* getBufferPtr(); 
-    virtual void setMess(const char* str); 
     virtual ~messageBase(); 
 
 protected:
     messageBase(); 
-    messageBase(const char* str, int sender);
-    char buffer[1024]; 
-    int sender_id; 
 };
 
 
@@ -42,15 +34,20 @@ class message : public messageBase{
 public: 
 
     message(); 
-    message(const char* mes, int from, int to); 
-     int getSenderId() const; 
-    virtual ~message(); 
+    message(const char* mes, int sender, int dest); 
+    ~message();
+    void setSenderId(int f); 
+    int getSenderId() const; 
     void printMesg(); 
     int getDest() const; 
     void setDest(int d); 
-
+    void setMess(const char* str);
+    char* getBufferPtr(); 
+    
 private: 
-    int dest; 
+    char buffer[1024]; 
+    int dest_id; 
+    int sender_id; 
 };
 
 
@@ -60,13 +57,15 @@ class groupAddRequest:public messageBase
 public:
      int getSenderId() const; 
     groupAddRequest();
-    groupAddRequest(const char* mes, int from, int group, int member); 
+    groupAddRequest(int src, int group, int member); 
     void setMemberId(int i);
-    int getMemberId(); 
-     int getGroupId(); 
+    int getMemberId() const; 
+     int getGroupId() const; 
 private: 
+    int sender_id; 
     int group_id; 
     int member_add_id; 
+    
 };
 
 #endif /* MESSAGE_H */
