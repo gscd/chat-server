@@ -7,9 +7,8 @@
       <itemPath>../Monitor.hpp</itemPath>
       <itemPath>../Reactor.hpp</itemPath>
       <itemPath>../TCP_server.h</itemPath>
-      <itemPath>../group.h</itemPath>
+      <itemPath>../client.h</itemPath>
       <itemPath>../message.h</itemPath>
-      <itemPath>../server.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -21,10 +20,8 @@
       <itemPath>../Monitor.cpp</itemPath>
       <itemPath>../TCP_server.cpp</itemPath>
       <itemPath>../client.cpp</itemPath>
-      <itemPath>../group.cpp</itemPath>
       <itemPath>../main.cpp</itemPath>
-      <itemPath>../messege.cpp</itemPath>
-      <itemPath>../server.cpp</itemPath>
+      <itemPath>../message.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -69,19 +66,13 @@
       </item>
       <item path="../client.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="../group.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="../group.h" ex="false" tool="3" flavor2="0">
+      <item path="../client.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../main.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="../message.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="../message.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="../messege.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="../server.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="../server.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -120,19 +111,13 @@
       </item>
       <item path="../client.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="../group.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="../group.h" ex="false" tool="3" flavor2="0">
+      <item path="../client.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../main.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="../message.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="../message.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="../messege.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="../server.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="../server.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

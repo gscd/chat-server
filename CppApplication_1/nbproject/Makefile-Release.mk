@@ -38,10 +38,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/5c0/Monitor.o \
 	${OBJECTDIR}/_ext/5c0/TCP_server.o \
 	${OBJECTDIR}/_ext/5c0/client.o \
-	${OBJECTDIR}/_ext/5c0/group.o \
 	${OBJECTDIR}/_ext/5c0/main.o \
-	${OBJECTDIR}/_ext/5c0/messege.o \
-	${OBJECTDIR}/_ext/5c0/server.o
+	${OBJECTDIR}/_ext/5c0/message.o
 
 
 # C Compiler Flags
@@ -83,25 +81,15 @@ ${OBJECTDIR}/_ext/5c0/client.o: ../client.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5c0/client.o ../client.cpp
 
-${OBJECTDIR}/_ext/5c0/group.o: ../group.cpp
-	${MKDIR} -p ${OBJECTDIR}/_ext/5c0
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5c0/group.o ../group.cpp
-
 ${OBJECTDIR}/_ext/5c0/main.o: ../main.cpp
 	${MKDIR} -p ${OBJECTDIR}/_ext/5c0
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5c0/main.o ../main.cpp
 
-${OBJECTDIR}/_ext/5c0/messege.o: ../messege.cpp
+${OBJECTDIR}/_ext/5c0/message.o: ../message.cpp
 	${MKDIR} -p ${OBJECTDIR}/_ext/5c0
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5c0/messege.o ../messege.cpp
-
-${OBJECTDIR}/_ext/5c0/server.o: ../server.cpp
-	${MKDIR} -p ${OBJECTDIR}/_ext/5c0
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5c0/server.o ../server.cpp
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5c0/message.o ../message.cpp
 
 # Subprojects
 .build-subprojects:
