@@ -8,13 +8,12 @@
 #include<string.h>
 #include<iostream>
 
-messageBase::messageBase(const char* str, int sender)
-{
-    memcpy(buffer , str, 1024);
-    sender_id = sender;
-}
+
 messageBase::messageBase()
 {}
+messageBase::~messageBase()
+{}
+
 
 messageBase* messageBase::factory(const char* buffer)
 {
@@ -28,40 +27,15 @@ messageBase* messageBase::factory(const char* buffer)
     }
 }
 
-void messageBase::setMess(const char* str)
+
+
+
+message::message(const char* mes, int sender, int dest)
 {
-    memset(buffer, '\0', 1024); 
-    memcpy(buffer, str, strlen(str)); 
+    memcpy(buffer , mes, 1024);
+    sender_id = sender;
+    dest_id = dest; 
 }
-
-int messageBase::getSenderId() const
-{
-    return sender_id; 
-}
-
-void messageBase::setSenderId(int f)
-{
-    sender_id = f; 
-}
-
-char* messageBase::getBufferPtr()
-{
-    return buffer; 
- }
- 
-messageBase::~messageBase()
-{}
-
-
-//int message::getSenderId() const
-//{
-//    return getSenderId();
-//}
-
-
-message::message(const char* mes, int from, int to):
-messageBase(mes, from), dest(to)
-{}
 
 message::message()
 {}
@@ -71,43 +45,60 @@ message::~message()
 
 void message::setDest(int d)
 {
-    dest = d; 
+    dest_id = d; 
 }
 
 int message::getSenderId() const
 {
-    return getSenderId(); 
+    return sender_id; 
 }
 
 int message::getDest() const 
 {
-    return dest; 
+    return dest_id; 
 }
 
-
+void message::setMess(const char* str)
+{
+    memset(buffer, '\0', 1024); 
+    memcpy(buffer, str, strlen(str)); 
+}
  
-groupAddRequest::groupAddRequest(const char* mes, int from, int group, int member):
-messageBase(mes,from),group_id(group), member_add_id(member)
+void message::setSenderId(int f)
+{
+    sender_id = f; 
+}
+
+char* message::getBufferPtr()
+{
+    return buffer; 
+ }
+ 
+
+groupAddRequest::groupAddRequest(int src, int group, int member): 
+sender_id(src), group_id(group), member_add_id(member)
 {}
+
+ groupAddRequest::groupAddRequest()
+ {}
 
  void groupAddRequest::setMemberId(int i)
  {
      member_add_id = i; 
  }
  
- int groupAddRequest::getMemberId()
+ int groupAddRequest::getMemberId() const
  {
      return member_add_id; 
  }
- groupAddRequest::groupAddRequest()
- {}
+
  
  int  groupAddRequest::getSenderId() const
  {
-    return getSenderId(); 
+    return sender_id; 
 }
  
-int groupAddRequest::getGroupId() 
+int groupAddRequest::getGroupId() const
 {
     return group_id; 
 }
