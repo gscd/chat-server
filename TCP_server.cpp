@@ -52,16 +52,20 @@ void TCP::Accept()
     message m;
     read( new_socket , &m, sizeof(message));
     
-    std::shared_ptr<client> new_client(new user(m.getSenderId(),new_socket)); 
+    int sender_id = m.getSenderId(); 
+  
+    std::shared_ptr<client> new_client(new user(sender_id,new_socket)); 
     
-    client_map[m.getSenderId()] = new_client;
+    client_map[sender_id] = new_client;
+    
+    std::cout << "sender_id" << sender_id << std::endl;  
     std::cout<<" insert into map: " << client_map[m.getSenderId()] ->getId() << " sk: "<<  client_map[m.getSenderId()] ->getSk() <<std::endl; 
    
     m_react.AddReadHandler(new_socket, std::bind(&TCP::Read, this,std::placeholders:: _1));
 }
 
 
-void TCP::CreateGroup(messageBase& m)
+void TCP::CreateGroup(message& m)
 {
    
     std::shared_ptr<client> new_group(new group(group_counter,0)); 
@@ -85,25 +89,23 @@ void TCP::CreateGroup(messageBase& m)
 
 void TCP::AddMemberGroup(groupAddRequest & m)
 {
-  
-     
      int member_to_add = m.getMemberId();
-     int group_id = m.getSenderId(); 
-     std::cout<<" add member member_to_add" <<member_to_add;
+     int group_id = m.getGroupId(); 
+     
+     std::cout<<" add member " <<member_to_add;
      std::cout<<" group_id" <<group_id << std::endl;
      std::shared_ptr<group> group_ptr = std::dynamic_pointer_cast<group>(client_map[group_id]);
      
     group_ptr->addMember(client_map[member_to_add]);
 }
 
-//test
+
 void TCP::Read(int fd){
 
     char buffer[1024];  //data buffer of 1K
     char mes[1024];
     memset(buffer, '\0', 1024); 
    
-     messageBase* m; 
     
     if ((read( fd , buffer, sizeof(buffer))) <= 0)
     {
@@ -111,6 +113,17 @@ void TCP::Read(int fd){
        getpeername(fd , reinterpret_cast<struct sockaddr*>(&address) , \
                             reinterpret_cast<socklen_t*>(&addrlen));
        printf("Host disconnected , ip %s , port %d \n" , inet_ntoa(address.sin_addr) , ntohs(address.sin_port));
+       
+       for(auto& e : client_map)
+       {
+           if((e.second)->getSk() == fd)
+           {
+               std::cout<<"user "<< e.first << " disconnect\n"; 
+               client_map.erase(e.first); 
+               
+           }
+       }
+       
        //client_map.erase()
        m_react.DeleteHandler(fd);
        close(fd);
@@ -120,33 +133,35 @@ void TCP::Read(int fd){
     {
         read(fd , buffer, sizeof(buffer));
         
-        if(!strcmp("group create",buffer))
+        if(!strcmp("create",buffer))
+        {
+            message m; 
+            read( fd , &m, sizeof(message));
+            std::cout << "user type group create\n"; 
+            CreateGroup(m);
+
+        }
+        else if(!strcmp("add member",buffer))
         {
             groupAddRequest ar;
-            read( fd , &ar, sizeof(groupAddRequest));
-            std::cout << "user type group add\n"; 
+            read(fd, &ar, sizeof(groupAddRequest)); 
+            
+            std::cout << "user type add member\n"; 
             AddMemberGroup(ar);
-        }
-        else if(!strcmp("group create",buffer))
-        {
-
-            //read( fd , &ar, sizeof(groupAddRequest));
-            std::cout << "user type group create\n"; 
-            //CreateGroup(ar);
-
         }  
     }
     else
     {
-     
         message m; 
         read( fd , &m, sizeof(message));
       
         int x = m.getSenderId(); 
      
         std::cout<<x<< std::endl; 
- 
-        client_map[m.getSenderId()]->sendMess(m);
+        
+        int sid = m.getDest(); 
+        
+        client_map[sid]->sendMess(m);
   
     }
 }
