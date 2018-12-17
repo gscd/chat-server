@@ -96,7 +96,7 @@ void TCP::AddMemberGroup(groupAddRequest & m)
     group_ptr->addMember(client_map[member_to_add]);
 }
 
-
+//test
 void TCP::Read(int fd){
 
     char buffer[1024];  //data buffer of 1K
